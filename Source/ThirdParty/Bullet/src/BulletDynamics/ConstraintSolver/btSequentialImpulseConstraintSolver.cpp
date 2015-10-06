@@ -39,6 +39,11 @@ int		gNumSplitImpulseRecoveries = 0;
 
 #include "BulletDynamics/Dynamics/btRigidBody.h"
 
+// XXX Jukka: Added USE_SIMD=1 that seems to be missing and the code below doesn't get SIMDized.
+#ifdef BT_USE_SSE
+#define USE_SIMD 1
+#endif //
+
 btSequentialImpulseConstraintSolver::btSequentialImpulseConstraintSolver()
 :m_btSeed2(0)
 {
