@@ -272,6 +272,7 @@ typedef float btScalar;
 #endif
 
 #ifdef BT_USE_SSE
+#include <xmmintrin.h>
 typedef __m128 btSimdFloat4;
 #endif//BT_USE_SSE
 
