@@ -240,7 +240,7 @@ if (EMSCRIPTEN)     # CMAKE_CROSSCOMPILING is always true for Emscripten
     set (EMSCRIPTEN_ROOT_PATH "" CACHE PATH "Root path to Emscripten cross-compiler tools (Emscripten cross-compiling build only)")
     set (EMSCRIPTEN_SYSROOT "" CACHE PATH "Path to Emscripten system root (Emscripten cross-compiling build only)")
     option (EMSCRIPTEN_ALLOW_MEMORY_GROWTH "Enable memory growing based on application demand (Emscripten cross-compiling build only)")
-    math (EXPR EMSCRIPTEN_TOTAL_MEMORY "32 * 1024 * 1024")     # This option is ignored when EMSCRIPTEN_ALLOW_MEMORY_GROWTH option is set
+    math (EXPR EMSCRIPTEN_TOTAL_MEMORY "256 * 1024 * 1024")     # This option is ignored when EMSCRIPTEN_ALLOW_MEMORY_GROWTH option is set
     set (EMSCRIPTEN_TOTAL_MEMORY ${EMSCRIPTEN_TOTAL_MEMORY} CACHE STRING "Specify the total size of memory to be used (Emscripten cross-compiling build only); default to 33554432 (32MB), this option is ignored when EMSCRIPTEN_ALLOW_MEMORY_GROWTH=1")
     cmake_dependent_option (EMSCRIPTEN_SHARE_DATA "Enable sharing data file support (Emscripten cross-compiling build only)" FALSE "EMSCRIPTEN" FALSE)
 endif ()
@@ -1039,7 +1039,7 @@ macro (setup_emscripten_linker_flags LINKER_FLAGS)
     else ()
         set (MEMORY_LINKER_FLAGS "-s TOTAL_MEMORY=${EMSCRIPTEN_TOTAL_MEMORY}")
     endif ()
-    set (${LINKER_FLAGS} "${${LINKER_FLAGS}} ${MEMORY_LINKER_FLAGS} -s USE_SDL=2 -s NO_EXIT_RUNTIME=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1")
+    set (${LINKER_FLAGS} "${${LINKER_FLAGS}} ${MEMORY_LINKER_FLAGS} -s USE_SDL=2 -s NO_EXIT_RUNTIME=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s PRECISE_F32=1")
     set (${LINKER_FLAGS}_RELEASE "${${LINKER_FLAGS}_RELEASE} -O3 -s AGGRESSIVE_VARIABLE_ELIMINATION=1")     # Remove variables to make the -O3 regalloc easier
     if (NOT DEFINED ENV{CI})
         set (${LINKER_FLAGS}_DEBUG "${${LINKER_FLAGS}_DEBUG} -g4")     # Preserve LLVM debug information, show line number debug comments, and generate source maps

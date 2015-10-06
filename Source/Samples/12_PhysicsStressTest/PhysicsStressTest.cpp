@@ -145,11 +145,14 @@ void PhysicsStressTest::CreateScene()
 
     {
         // Create a large amount of falling physics objects
-        const unsigned NUM_OBJECTS = 1000;
+        const unsigned NUM_OBJECTS = 250;
         for (unsigned i = 0; i < NUM_OBJECTS; ++i)
+        for (int x = -1; x <= 1; ++x)
+        for (int z = 0; z <= 1; ++z)
         {
             Node* boxNode = scene_->CreateChild("Box");
-            boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
+            boxNode->SetPosition(Vector3(x * 2.f, i * 2.0f + 100.0f, z * 2.f));
+//            boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
             StaticModel* boxObject = boxNode->CreateComponent<StaticModel>();
             boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
             boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneSmall.xml"));
